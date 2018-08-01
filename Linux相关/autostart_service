@@ -1,0 +1,20 @@
+#  开机自启动脚本，使用systemctl来管理service
+#  将该service放置于/usr/lib/systemd/system目录下
+#  ！！！注意事项：After字段指定的是该脚本运行于哪些服务之后，需要运行于mysql服务之后！！！
+#  将文件置于该目录下后，使用systemctl enable xxx.service添加服务到自启动
+[Unit]
+Description=update settings.yaml
+Documentation=empty
+After=network.target remote-fs.target nss-lookup.target mysqld.service
+
+[Service]
+Type=simple
+PIDFile=/run/update_yaml.pid
+ExecStartPre=
+ExecStart=/apps/ips_partII_service/bin/python /apps/ips_partII_service/src/ips_partII_service/ips_zzz/my_script/upflow_yaml.py
+ExecReload=
+ExecStop=
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
