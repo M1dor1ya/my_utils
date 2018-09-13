@@ -1,0 +1,22 @@
+import pymysql
+import logging
+
+config = {
+        'host': '127.0.0.1',
+        'port': 3306,
+        'user': 'root',
+        'password': 'root',
+        'db': 'test',
+        'charset': 'utf8',
+        'cursorclass': pymysql.cursors.DictCursor
+    }
+conn = pymysql.connect(**config)
+cursor = conn.cursor()
+
+try:
+    cursor.execute('')
+except Exception as e:
+    logging.error(e)
+finally:
+    cursor.close()
+    conn.close()
