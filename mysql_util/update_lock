@@ -27,9 +27,9 @@ def update_func():
     conn.close()
 
 threads = []
-t1 = threading.Thread(target=update_func)  # 生成一个线程实例
-t2 = threading.Thread(target=update_func)  # 生成另一个线程实例
-t3 = threading.Thread(target=update_func)  # 生成另一个线程实例
+t1 = threading.Thread(target=update_func)
+t2 = threading.Thread(target=update_func)
+t3 = threading.Thread(target=update_func)
 threads.append(t1)
 threads.append(t2)
 threads.append(t3)
