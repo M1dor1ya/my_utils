@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-# @Time    : 2018/8/7 10:43
+# @Time    : 2019/3/19 15:41
 # @Author  : Zcs
 # @File    : time_utils.py
-
 import time
 import datetime
 import calendar
@@ -56,7 +55,6 @@ def time_gen(start, interval):
     :param start: 开始时间 '2018-07-12 00:00:00'
     :param interval: 时间间隔，时间戳，int类型
     :return: 结束时间 '2018-7-13 00:00:00'
-
     exp:
     my_gen = time_gen('2018-07-12 00:00:00', 3600)
     for i in range(10):
@@ -70,4 +68,7 @@ def time_gen(start, interval):
         yield end
 
 if __name__ == '__main__':
-    pass
+    my_gen = time_gen('2018-10-10 00:00:00', 86400)
+    for i in range(7):
+        print(next(my_gen))
+    print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))
