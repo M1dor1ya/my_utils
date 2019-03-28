@@ -5,33 +5,33 @@ class Node:
         self.right = right
 
 # 中序遍历
-def lmg(obj):
+def left_mid_right(obj):
     if obj is None:
         return
-    lmg(obj.left)
+    left_mid_right(obj.left)
     print(obj.value)
-    lmg(obj.right)
+    left_mid_right(obj.right)
 
 
 # 先序遍历
-def mlg(obj):
+def mid_left_right(obj):
     if obj is None:
         return
     print(obj.value)
-    mlg(obj.left)
-    mlg(obj.right)
+    mid_left_right(obj.left)
+    mid_left_right(obj.right)
 
 # 后序遍历
-def lrg(obj):
+def left_right_mid(obj):
     if obj is None:
         return
-    lrg(obj.left)
-    lrg(obj.right)
+    left_right_mid(obj.left)
+    left_right_mid(obj.right)
     print(obj.value)
 
 A = Node('D',Node('B',Node('A'),Node('C')),Node('E',right=Node('G',Node('F'))))
-lmg(A)
+left_mid_right(A)
 print('--')
-mlg(A)
+mid_left_right(A)
 print('--')
-lrg(A)
+left_right_mid(A)
