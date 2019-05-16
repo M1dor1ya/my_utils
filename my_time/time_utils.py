@@ -67,6 +67,15 @@ def time_gen(start, interval):
         start = end
         yield end
 
+def utc2local(utc_str):
+    """
+    print(utc2local('2018-11-30T14:36:58Z'))
+    :param utc_str:
+    :return:
+    """
+    obj = datetime.datetime.strptime(utc_str, "%Y-%m-%dT%H:%M:%S%fZ")
+    return obj.strftime("%Y-%m-%d %H:%M:%S")
+
 if __name__ == '__main__':
     my_gen = time_gen('2018-10-10 00:00:00', 86400)
     for i in range(7):
