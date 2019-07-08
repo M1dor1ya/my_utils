@@ -29,15 +29,26 @@ config = {
 # conn.close()
 
 
-class MysqlPool(object):
+import pymysql
+from g_conf.config import config_template
+from DBUtils.PooledDB import PooledDB
 
-    print('初始化连接池')
-    __pool = PooledDB(**config)
+
+class MysqlPool:
+    config = {
+        'creator': pymysql,
+        'host': config_template['MYSQL']['HOST'],
+        'port': config_template['MYSQL']['PORT'],
+        'user': config_template['MYSQL']['USER'],
+        'password': config_template['MYSQL']['PASSWD'],
+        'db': config_template['MYSQL']['DB'],
+        'charset': config_template['MYSQL']['CHARSET'],
+        'cursorclass': pymysql.cursors.DictCursor
+    }
+    pool = PooledDB(**config)
 
     def __enter__(self):
-        if self.__pool is None:
-            self.__pool = PooledDB(**config)
-        self.conn = self.__pool.connection()
+        self.conn = MysqlPool.pool.connection()
         self.cursor = self.conn.cursor()
         return self
 
@@ -45,8 +56,13 @@ class MysqlPool(object):
         self.cursor.close()
         self.conn.close()
 
-#  在代码主文件进行一次初始化即可： MysqlPool()
+
 #  使用方法：
-with MysqlPool() as db:
-    db.cursor.execute('SELECT * FROM test')
-    data = db.cursor.fetchall()
+from g_utils.db_helper import MysqlPool
+def my_paginator(sql, count, page):
+    with MysqlPool() as db:
+        sql += ' %s'
+        limit = 'LIMIT %s,%s' % ((page-1)*count, count)
+        db.cursor.execute(sql % limit)
+        data = db.cursor.fetchall()
+    return data
